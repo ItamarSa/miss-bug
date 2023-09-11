@@ -4,7 +4,8 @@ import fs from 'fs'
 export const bugService = {
     query,
     getById,
-    save
+    save,
+    remove
 }
 
 const bugs = utilService.readJsonFile('data/bug.json')
@@ -16,6 +17,13 @@ function query(){
 function getById(bugId) {
     const bug = bugs.find(bug => bug._id === bugId)
     return Promise.resolve(bug)
+}
+
+function remove(bugId) {
+    const bugIdx = bugs.findIndex(bug => bug._id === bugId)
+    bugs.splice(bugIdx, 1)
+    return _saveBugsToFile()
+    // return Promise.resolve()
 }
 
 function save(bug) {

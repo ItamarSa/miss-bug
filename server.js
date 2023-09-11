@@ -59,3 +59,19 @@ app.get('/api/bug/:bugId', (req, res) => {
             res.status(400).send('Cannot get bug')
         })
 })
+
+// Remove Car (Delete)
+app.get('/api/bug/:bugId/remove', (req, res) => {
+    const bugId = req.params.bugId
+
+    bugService.remove(bugId)
+        .then(() => {
+            console.log(`bug ${bugId} removed!`);
+            res.redirect('/api/bug')
+        })
+        .catch((err) => {
+            loggerService.error('Cannot remove bug', err)
+            res.status(400).send('Cannot remove bug')
+        })
+
+})

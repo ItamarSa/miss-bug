@@ -1,7 +1,8 @@
 
-import { storageService } from './async-storage.service.js'
+// import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 
+const BASE_URL = '/api/bug/'
 const STORAGE_KEY = 'bugDB'
 
 _createBugs()
@@ -11,30 +12,45 @@ export const bugService = {
     getById,
     save,
     remove,
+    getDefaultFilter
 }
 
 
-function query() {
-    return storageService.query(STORAGE_KEY)
+function query(filterBy = {}) {
+    return axios.get(BASE_URL).then(res => res.data)
+    .then(bugs => {
+        // console.log('bugs:', bugs)
+        if (filterBy.title) {
+            const regExp = new RegExp(filterBy.title, 'i')
+            bugs = bugs.filter(bug => regExp.test(bug.title))
+        }
+
+        if (filterBy.minSeverity) {
+            bugs = bugs.filter(bug => bug.severity >= filterBy.minSeverity)
+        }
+        return bugs
+    })
 }
 function getById(bugId) {
-    return storageService.get(STORAGE_KEY, bugId)
+    return axios.get(BASE_URL + bugId).then(res => res.data)
 }
 
 function remove(bugId) {
-    return storageService.remove(STORAGE_KEY, bugId)
+    return axios.get(BASE_URL + bugId + '/remove').then(res => res.data)
 }
 
 function save(bug) {
-    if (bug._id) {
-        return storageService.put(STORAGE_KEY, bug)
-    } else {
-        return storageService.post(STORAGE_KEY, bug)
-    }
+    console.log('bug', bug)
+    const url = BASE_URL + 'save'
+    let queryParams = `?title=${bug.title}&severity=${bug.severity}&description=${bug.description}`
+
+    if (bug._id) queryParams += `&_id=${bug._id}`
+    return axios.get(url + queryParams).then(res => res.data)
 }
 
-
-
+function getDefaultFilter() {
+    return { title: '', minSeverity: '' }
+}
 
 function _createBugs() {
     let bugs = utilService.loadFromStorage(STORAGE_KEY)
@@ -63,7 +79,4 @@ function _createBugs() {
         ]
         utilService.saveToStorage(STORAGE_KEY, bugs)
     }
-
-
-
 }

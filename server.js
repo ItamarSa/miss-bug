@@ -3,6 +3,7 @@ import cookieParser from 'cookie-parser'
 
 import { bugService } from './services/bug.service.js'
 import { loggerService } from './services/logger.service.js'
+import { pdfService } from './services/PDFService.js'
 
 const app = express()
 
@@ -19,6 +20,8 @@ app.listen(3030, () => console.log('Server ready at port 3030'))
 app.get('/api/bug', (req, res) => {
     bugService.query()
         .then(bugs => {
+            pdfService.buildBugsPDF(bugs)
+            console.log('success: PDF created.')
             res.send(bugs)
             console.log('bugs', bugs)
         })

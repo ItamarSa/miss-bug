@@ -25,5 +25,37 @@ app.get('/api/bug', (req, res) => {
             loggerService.error('Cannot get bugs', err)
             res.status(400).send('Cannot get bugs')
         })
-        console.log('bugs', bugs)
+        // console.log('bugs', bugs)
+})
+
+// Save Bug (CREATE/UPDATE)
+app.get('/api/bug/save', (req, res) => {
+console.log('req.query:', req.query)
+    const bug = {
+        _id: req.query._id,
+        title: req.query.title,
+        severity: +req.query.severity,
+    }
+
+    bugService.save(bug)
+        .then(bug => {
+            res.send(bug)
+        })
+        .catch((err) => {
+            loggerService.error('Cannot save bug', err)
+            res.status(400).send('Cannot save bug')
+        })
+})
+
+// Get Bug (READ)
+app.get('/api/bug/:bugId', (req, res) => {
+    const bugId = req.params.bugId
+    bugService.getById(bugId)
+        .then(bug => {
+            res.send(bug)
+        })
+        .catch((err) => {
+            loggerService.error('Cannot get bug', err)
+            res.status(400).send('Cannot get bug')
+        })
 })

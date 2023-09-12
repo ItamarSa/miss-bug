@@ -23,8 +23,10 @@ function query(filterBy) {
     }
 
     if (filterBy.labels) {
-        const regExp = new RegExp(filterBy.labels, 'i')
-        bugToReturn = bugToReturn.filter(bug => bug.labels.some(label => regExp.test(label)))
+        const labelArray = filterBy.labels.split(',')
+        bugToReturn = bugToReturn.filter(bug =>
+            bug.labels && bug.labels.some(label => labelArray.includes(label))
+        )
     }
 
     if (filterBy.sortBy === 'severity') {
@@ -40,7 +42,7 @@ function query(filterBy) {
         const startIdx = filterBy.pageIdx * PAGE_SIZE
         bugToReturn = bugToReturn.slice(startIdx, startIdx + PAGE_SIZE)
     }
- 
+
     return Promise.resolve(bugToReturn)
 }
 

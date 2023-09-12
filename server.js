@@ -16,23 +16,6 @@ app.use(express.json())
 app.get('/', (req, res) => res.send('Hello there'))
 app.listen(3030, () => console.log('Server ready at port 3030'))
 
-
-// // Get Bugs (READ)
-// app.get('/api/bug', (req, res) => {
-//     bugService.query()
-//         .then(bugs => {
-//             pdfService.buildBugsPDF(bugs)
-//             console.log('success: PDF created.')
-//             res.send(bugs)
-//             console.log('bugs', bugs)
-//         })
-//         .catch(err => {
-//             loggerService.error('Cannot get bugs', err)
-//             res.status(400).send('Cannot get bugs')
-//         })
-//     // console.log('bugs', bugs)
-// })
-
 // Get Bugs (READ-filterBy)
 app.get('/api/bug', (req, res) => {
     const filterBy = {

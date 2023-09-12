@@ -2,14 +2,14 @@
   {
     "_id": "abc123",
     "title": "Cannot save a Bug",
+    "severity": 123,
     "description": "problem when clicking Save",
-    "severity": 3,
-    "createdAt": 1542107359454,
     "labels": [
       "not-critical",
       "passed-CR",
       "dev-branch"
-    ]
+    ],
+    "createdAt": 1694540831060
   },
   {
     "_id": "abc124",
@@ -24,6 +24,18 @@
     ]
   },
   {
+    "_id": "Z0kTy",
+    "title": "This bug is amizing",
+    "severity": 32,
+    "description": "problem when someone clicking Save",
+    "labels": [
+      "happy",
+      "no need-CR",
+      "lorem inspum"
+    ],
+    "createdAt": 1694540825547
+  },
+  {
     "_id": "abc125",
     "title": "Cannot save a Bug",
     "severity": 6,
@@ -36,15 +48,10 @@
     "createdAt": 1694530107316
   },
   {
-    "title": "This bug is amizing",
-    "severity": 9,
-    "description": "problem when someone clicking Save",
-    "labels": [
-      "happy",
-      "no need-CR",
-      "lorem inspum"
-    ],
-    "createdAt": 1694523947190,
-    "_id": "Z0kTy"
+    "_id": "5w0GD",
+    "title": "ansin",
+    "severity": 4,
+    "description": "lorerm lore masd",
+    "createdAt": 1694540238459
   }
 ]

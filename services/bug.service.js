@@ -8,10 +8,38 @@ export const bugService = {
     remove
 }
 
+
+
+// function setBookSort(sortBy = {}) {
+    //     if (sortBy.price !== undefined)
+//         gBooks.sort((b1, b2) => (b1.Price - b2.Price) * sortBy.price)
+//     if (sortBy.rate !== undefined)
+//         gBooks.sort((b1, b2) => (b1.rate - b2.rate) * sortBy.rate)
+//     if (sortBy.name !== undefined)
+//     gBooks.sort((b1,b2)=>b1.name.localeCompare(b2.name)*sortBy.name)
+
+// }
+
 const bugs = utilService.readJsonFile('data/bug.json')
 
-function query(){
-    return Promise.resolve(bugs)
+function query(filterBy){
+    let bugToReturn = bugs
+
+    if (filterBy.title) {
+        const regExp = new RegExp(filterBy.title, 'i')
+        bugToReturn = bugToReturn.filter(bug => regExp.test(bug.title))
+    }
+
+    if (filterBy.minSeverity) {
+        bugToReturn = bugToReturn.filter(bug => bug.severity >= filterBy.minSeverity)
+    }
+
+    if (filterBy.labels) {
+        const regExp = new RegExp(filterBy.labels, 'i')
+        bugToReturn = bugToReturn.filter(bug => bug.labels.some(label => regExp.test(label)))
+    }
+
+    return Promise.resolve(bugToReturn)
 }
 
 function getById(bugId) {
@@ -27,6 +55,7 @@ function remove(bugId) {
 }
 
 function save(bug) {
+    bug.createdAt = Date.now()
     if (bug._id) {
         const bugIdx = bugs.findIndex(currBug => currBug._id === bug._id)
         bugs[bugIdx] = bug

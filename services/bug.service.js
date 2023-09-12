@@ -7,22 +7,10 @@ export const bugService = {
     save,
     remove
 }
-
-
-
-// function setBookSort(sortBy = {}) {
-    //     if (sortBy.price !== undefined)
-//         gBooks.sort((b1, b2) => (b1.Price - b2.Price) * sortBy.price)
-//     if (sortBy.rate !== undefined)
-//         gBooks.sort((b1, b2) => (b1.rate - b2.rate) * sortBy.rate)
-//     if (sortBy.name !== undefined)
-//     gBooks.sort((b1,b2)=>b1.name.localeCompare(b2.name)*sortBy.name)
-
-// }
-
+const PAGE_SIZE = 3
 const bugs = utilService.readJsonFile('data/bug.json')
 
-function query(filterBy){
+function query(filterBy) {
     let bugToReturn = bugs
 
     if (filterBy.title) {
@@ -30,8 +18,8 @@ function query(filterBy){
         bugToReturn = bugToReturn.filter(bug => regExp.test(bug.title))
     }
 
-    if (filterBy.minSeverity) {
-        bugToReturn = bugToReturn.filter(bug => bug.severity >= filterBy.minSeverity)
+    if (filterBy.severity) {
+        bugToReturn = bugToReturn.filter(bug => bug.severity >= filterBy.severity)
     }
 
     if (filterBy.labels) {
@@ -39,6 +27,20 @@ function query(filterBy){
         bugToReturn = bugToReturn.filter(bug => bug.labels.some(label => regExp.test(label)))
     }
 
+    if (filterBy.sortBy === 'severity') {
+        bugToReturn.sort((a, b) => a.severity - b.severity)
+    } else if (filterBy.sortBy === 'createdAt') {
+        bugToReturn.sort((a, b) => a.createdAt - b.createdAt)
+    }
+    else if (filterBy.sortBy === 'title') {
+        bugToReturn.sort((a, b) => a.title.localeCompare(b.title))
+    }
+
+    if (filterBy.pageIdx !== undefined) {
+        const startIdx = filterBy.pageIdx * PAGE_SIZE
+        bugToReturn = bugToReturn.slice(startIdx, startIdx + PAGE_SIZE)
+    }
+ 
     return Promise.resolve(bugToReturn)
 }
 

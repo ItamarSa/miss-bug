@@ -12,7 +12,8 @@ export const bugService = {
     getById,
     save,
     remove,
-    getDefaultFilter
+    getDefaultFilter,
+    getUserBugs
 }
 
 
@@ -31,6 +32,10 @@ function remove(bugId) {
 function save(bug) {
     const method = bug._id ? 'put' : 'post'
     return axios[method](BASE_URL, bug).then(res => res.data)
+}
+
+function getUserBugs(userId) {
+    return axios.get(BASE_URL + userId).then(res => res.data)
 }
 
 function getDefaultFilter() {

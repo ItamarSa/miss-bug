@@ -9,7 +9,11 @@
       "passed-CR",
       "dev-branch"
     ],
-    "createdAt": 1694540831060
+    "createdAt": 1694540831060,
+    "owner": {
+      "_id": "u101",
+      "fullname": "Puki Ja"
+    }
   },
   {
     "_id": "abc124",
@@ -21,7 +25,11 @@
       "critical",
       "need-CR",
       "lorem"
-    ]
+    ],
+    "owner": {
+      "_id": "u102",
+      "fullname": "Muki ba"
+    }
   },
   {
     "_id": "Z0kTy",
@@ -33,7 +41,11 @@
       "no need-CR",
       "lorem inspum"
     ],
-    "createdAt": 1694540825547
+    "createdAt": 1694540825547,
+    "owner": {
+      "_id": "u100",
+      "fullname": "Master Adminov"
+    }
   },
   {
     "_id": "abc125",
@@ -45,13 +57,21 @@
       "need-CR",
       "access"
     ],
-    "createdAt": 1694530107316
+    "createdAt": 1694530107316,
+    "owner": {
+      "_id": "qNxjv",
+      "fullname": "Popo Pa"
+    }
   },
   {
     "_id": "5w0GD",
     "title": "ansin",
     "severity": 4,
     "description": "lorerm lore masd",
-    "createdAt": 1694540238459
+    "createdAt": 1694540238459,
+    "owner": {
+      "_id": "vU8d6",
+      "fullname": "Lili Lo"
+    }
   }
 ]
